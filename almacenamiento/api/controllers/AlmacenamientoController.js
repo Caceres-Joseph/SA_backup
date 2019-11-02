@@ -347,8 +347,6 @@ exports.agregar_traduccion_cadena = function (req, res) {
 exports.aprobar_traduccion_cadena = function (req, res) {
 
 
-	var ip = "http://archivos_traducidos:80/";
-	var ip_auth = "http://jwt:80/";
 
 	const scope = "traducidos.listaComplementos";
 	var token = req.body.token;
@@ -413,8 +411,38 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 
 			if (results[0][0].estado == 201) {
 				console.log("Cadena limpia");
+ 
+				var ip = "http://archivos_traducidos:80";
+				var ip_auth = "http://jwt:80";
+
+				var jwt = ip_auth + '/post/autorizacion'
+				axios.post(jwt, {
+					clientid: "ALMACENAMIENTO"
+				})
+					.then(result => {
+						console.log(" === TOken ======");
+						anonymous_token = result.data.token
+						console.log(result.data);
+						//console.log(anonymous_token)
+						var url2 = ip + 'post/complementoTraducido'
+
+						axios.post(url2, {
+							token: anonymous_token,
+							url: almacenamiento,
+							tipo: 'POST',
+							funcionSolicitada: 'almacenamiento.suscripcion',
+							parametros: {}
+						}).then(result2 => {
+							console.log("Consumiendo traducidos ==================");
+							console.log(result2.data)
+						})
+							.catch(e => {
+								console.log('MODO PÁNICO')
+							});
+					});
 
 
+				/*
 				let query3 = "call sp_traducidoscomplementoTraducido()";
 				connection.query(query3, true, (error, results, fields) => {
 					if (error) {
@@ -428,6 +456,7 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 						var data = {};
 						data.nombre = results[0][0].nombre;
 						data.correo = results[0][0].correo;
+						data.token = "adfa34234234";
 						var complemento = {
 							nombre: results[0][0].nombre,
 							localizacionOriginal: results[0][0].localizacionoriginal,
@@ -435,20 +464,9 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 
 						};
 						data.complemento = complemento;
+ 
 
-						/*
-						for (var i = 0; i < results[0].length; i++) {
-							var cadena = {
-								msgid: results[0][i].msgid,
-								msgstr: results[0][i].msgstr,
-							}
-							contenido[i] = cadena;
-						}
-						*/
-
-
-						for (var i = results[0].length - 1; i >= 0; i--) {
-							//console.log(results[0][i].msgstr);
+						for (var i = results[0].length - 1; i >= 0; i--) { 
 							var cadena = {
 								msgid: results[0][i].msgid,
 								msgstr: results[0][i].msgstr,
@@ -466,72 +484,9 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 						});
 
 					}
-				});
-				/*
-
-				try {
-
-
-					axios.post(ip_auth+'post/autorizacion', {
-						clientid: "ALMACENAMIENTO"
-					}).then(function (result) {
-						var token = result.data.token;
-						
-						var miQuery = "SELECT Nombre, Correo from Usuario where Nombre = " + idUsuario + ";";
-						console.log(miQuery);
-						conexion.query(miQuery, function (err, result) {
-							if (err) {
-								response.send(JSON.stringify(
-									{
-										estado: "500",
-										mensaje: "Error de Servidor de Base de Datos de Traduccion"
-									}
-								))
-							} else {
-								nombre = result[0].Nombre;
-								correo = result[0].Correo;
-								
-								var data_Almacenamiento = {
-									token: token,
-									nombre: nombre,
-									correo: correo,
-									complemento: {
-										nombre: nombreComplemento,
-										localizacion: localizacion,
-										cadenas: arreglo
-									}
-								};
-								console.log("nuevo complementito");
-								console.log(data_Almacenamiento);
-								axios.post(ESB, {
-									token: token,
-									url: 'http://35.225.252.91:8003' + "/post/complemento",
-									tipo: "POST",
-									funcionSolicitada: "almacenamiento.guardarComplemento",
-									parametros: data_Almacenamiento
-								}).then((res) => {
-									console.log(res);
-									return response.send(res.data);
-								}).catch((error) => {
-									console.log(error);
-									return response.send(error.data);
-								});
-
-							}
-						})
-					}).catch((error) => {
-						console.log("alosss")
-
-						console.log(error);
-						return response.send(error.data);
-					})
-
-				} catch (error) {
-					return error;
-				}
+				}); 
 
 				*/
-
 
 			}
 

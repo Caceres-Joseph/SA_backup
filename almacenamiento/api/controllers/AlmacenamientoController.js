@@ -434,6 +434,8 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 							localizacionTraducida : results[0][0].localizaciontraduccion
 							
 						};
+						data.complemento= complemento;
+						console.log(data);
 
 						/*
 						var loc_original = results[0][0].LocalizacionOriginal;

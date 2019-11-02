@@ -424,40 +424,28 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 					else {
 						console.log("===== QUERY 3 =====");
 						console.log(results);
-						var cadenas = [];
+						var contenido = [];
 						var data = {};
 						data.nombre = results[0][0].nombre;
 						data.correo = results[0][0].correo;
-						var complemento={
+						var complemento = {
 							nombre: results[0][0].nombre,
-							localizacionOriginal : results[0][0].localizacionoriginal,
-							localizacionTraducida : results[0][0].localizaciontraduccion
-							
+							localizacionOriginal: results[0][0].localizacionoriginal,
+							localizacionTraducida: results[0][0].localizaciontraduccion
+
 						};
-						data.complemento= complemento;
-						console.log(data);
-
-						/*
-						var loc_original = results[0][0].LocalizacionOriginal;
-						var loc_traduccion = results[0][0].LocalizacionTraduccion;
-
-						for (var i = results[0].length - 1; i >= 0; i--) { 
-							var contenido = {
+						data.complemento = complemento; 
+						for (var i = 0; i < results[0].length; i++) { 
+							var cadena = {
 								msgid: results[0][i].msgid,
-								msgstr: results[0][i].msgstr,
-								numeroAprobaciones: results[0][i].numeroAprobaciones
+								msgstr: results[0][i].msgstr, 
 							}
-							cadenas[i] = contenido;
+							contenido[i] = cadena;
 						}
-						data.catalogo = [];
-						data.catalogo[0] = {
-							localizacionOriginal: loc_original,
-							localizacionTraduccion: loc_traduccion,
-							contenido: cadenas
-						};
-						console.log(cadenas);
-*/
-
+						
+						data.contenido= contenido;
+						
+						console.log(data);
 					}
 				});
 				/*

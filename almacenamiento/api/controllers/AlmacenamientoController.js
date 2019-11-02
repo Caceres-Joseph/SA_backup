@@ -428,13 +428,6 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 						var data = {};
 						data.nombre = results[0][0].nombre;
 						data.correo = results[0][0].correo;
-						var complemento = {
-							nombre: results[0][0].nombre,
-							localizacionOriginal: results[0][0].localizacionoriginal,
-							localizacionTraducida: results[0][0].localizaciontraduccion
-
-						};
-						data.complemento = complemento; 
 						for (var i = 0; i < results[0].length; i++) { 
 							var cadena = {
 								msgid: results[0][i].msgid,
@@ -443,8 +436,15 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 							contenido[i] = cadena;
 						}
 						
-						data.contenido= contenido;
-						
+						var complemento = {
+							nombre: results[0][0].nombre,
+							localizacionOriginal: results[0][0].localizacionoriginal,
+							localizacionTraducida: results[0][0].localizaciontraduccion,
+							contenido:contenido
+
+						};
+
+						data.complemento = complemento;   
 						console.log(data);
 					}
 				});

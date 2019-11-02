@@ -413,32 +413,8 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 			if (results[0][0].estado == 201) {
 				console.log("Cadena limpia");
  
-				var ip = "http://archivos_traducidos:80";
-				var ip_auth = "http://jwt:80";
 
-				var jwt = ip_auth + '/post/autorizacion'
-				axios.post(jwt, {
-					clientid: "ALMACENAMIENTO"
-				})
-					.then(result => {
-						console.log(" === TOken ======");
-						var anonymous_token = result.data.token
-						//console.log(anonymous_token)
-						var url2 = ip + '/post/complementoTraducido'
-
-						axios.post(url2, {
-							token: anonymous_token
-						}).then(result2 => {
-							console.log("Consumiendo traducidos ==================");
-							console.log(result2.data)
-						})
-							.catch(e => {
-								console.log('MODO PÁNICO')
-							});
-					});
-
-
-				/*
+					
 				let query3 = "call sp_traducidoscomplementoTraducido()";
 				connection.query(query3, true, (error, results, fields) => {
 					if (error) {
@@ -446,6 +422,8 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 						return res.send(error);
 					}
 					else {
+
+						
 						console.log("===== QUERY 3 =====");
 						console.log(results);
 						var contenido = [];
@@ -472,17 +450,49 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 						}
 
 						data.complemento.contenido = contenido;
-						console.log(data);
+						//console.log(data);
 
-						return res.send({
-							estado: 200,
-							mensaje: data
-						});
+
+						var ip = "http://archivos_traducidos:80";
+						var ip_auth = "http://jwt:80";
+		
+						var jwt = ip_auth + '/post/autorizacion'
+						axios.post(jwt, {
+							"clientid":"ARCHIVOS_TRADUCIDOS",
+							"secret":"ARCHIVOS_TRADUCIDOS"
+						})
+							.then(result => {
+								console.log(" === TOken ======");
+								var anonymous_token = result.data.token
+								//console.log(anonymous_token)
+								var url2 = ip + '/post/complementoTraducido'
+		
+								axios.post(url2, {
+									data
+								}).then(result2 => {
+									console.log("Consumiendo traducidos ==================");
+									console.log(result2.data)
+								})
+									.catch(e => {
+										console.log('MODO PÁNICO')
+									});
+							});
+		
+
+
+
+
+
+
+
+
+
+ 
 
 					}
 				}); 
 
-				*/
+				
 
 			}
 

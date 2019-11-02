@@ -254,6 +254,7 @@ exports.descargaPo = function(req,res){
 }
 
 exports.ComplementoTraducido = function(req,res){
+	console.log("Entro");
 	res.send(
 		{
 			estado:"200",

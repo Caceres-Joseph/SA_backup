@@ -444,6 +444,7 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 						}
 						
 						data.contenido= contenido;
+						console.log(data);
 					}
 				});
 				/*

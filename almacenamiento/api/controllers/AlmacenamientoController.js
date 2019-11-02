@@ -398,6 +398,7 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 		+ 0;
 
 	let query2 = "call sp_almacenamientoInsertaTraduccion(" + params + ")";
+	console.log(query2);
 	connection.query(query2, true, (error, results, fields) => {
 		if (error) {
 			console.log(error);

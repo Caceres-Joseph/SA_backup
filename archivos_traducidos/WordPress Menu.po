@@ -1,0 +1,43 @@
+# Este archivo es geenrado por el Grupo No 2
+# Es un archivo para traducciones en WordPress.
+
+# Trasducido:
+
+msgid ""
+msgstr ""
+
+"Project-Id-Version: 1.0\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2019-11-02 \n"
+"Language-Team: es_ES \n"
+"User: Alan Rene Bautista \n"
+"Language-Team: es_ES \n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_ES \n"
+"Complemento: WordPress Menu\n"
+
+
+# $tense = __( 'Menu', 'Menu' );
+#
+# wpml-name: NaN
+msgid '"Menu" 
+msgstr "Menu"
+
+# $tense = __( 'Login', 'Iniciciar Sesion' );
+#
+# wpml-name: 1474769938
+msgid '"Login" 
+msgstr "Iniciciar Sesion"
+
+# $tense = __( 'Welcome', 'Bienvenida' );
+#
+# wpml-name: 933897818
+msgid '"Welcome" 
+msgstr "Bienvenida"
+
+# $tense = __( 'About', 'Acerca de' );
+#
+# wpml-name: 2236340334
+msgid '"About" 
+msgstr "Acerca de"

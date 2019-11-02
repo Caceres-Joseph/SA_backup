@@ -1,0 +1,46 @@
+link#bootstrap-css(href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css', rel='stylesheet')
+script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js')
+script(src='//code.jquery.com/jquery-1.11.1.min.js')
+// ---- Include the above in your HEAD tag --------
+.container
+  #signupbox.mainbox.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2(style=' margin-top:50px')
+    .panel.panel-info
+      .panel-heading
+        .panel-title Registrar
+        div(style='float:right; font-size: 85%; position: relative; top:-10px')
+          a#signinlink(href='login') Ingresar
+      .panel-body
+        form(method='post')
+          //input(type='hidden', name='csrfmiddlewaretoken', value='XFe2rTYl9WOpV8U6X5CfbIuOZOELJ97S')
+          //input(type='hidden', name='csrfmiddlewaretoken', value='XFe2rTYl9WOpV8U6X5CfbIuOZOELJ97S')
+          #div_id_username.form-group.required
+            label.control-label.col-md-4.requiredField(for='Nombre')
+              | Nombre Usuario
+              span.asteriskField *
+            .controls.col-md-8
+              input#id_username.input-md.textinput.textInput.form-control(maxlength='30', name='nombre', placeholder='Escriba un nombre de sesion', style='margin-bottom: 10px', type='text')
+          #div_id_email.form-group.required
+            label.control-label.col-md-4.requiredField(for='Correo')
+              | E-mail
+              span.asteriskField *
+            .controls.col-md-8
+              input#id_email.input-md.emailinput.form-control(name='correo', placeholder='Ingrese su direccion de correo ', style='margin-bottom: 10px', type='email')
+          #div_id_password1.form-group.required
+            label.control-label.col-md-4.requiredField(for='Password')
+              | Password
+              span.asteriskField *
+            .controls.col-md-8
+              input#id_password1.input-md.textinput.textInput.form-control(name='password', placeholder='Ingrese una contraseña', style='margin-bottom: 10px', type='password')
+          #div_id_seleccion.form-group.required
+            label(for='exampleFormControlSelect2') Localizaciones
+            .controls.col-md-10
+            select#exampleFormControlSelect2.form-control(multiple='')
+              option 1
+              option 2
+              option 3
+              option 4
+              option 5
+          .form-group
+            .aab.controls.col-md-4
+            .controls.col-md-8
+              input#submit-id-signup.btn.btn-primary.btn.btn-info(type='submit', name='Registrar', value='Registrar')

@@ -1,0 +1,196 @@
+version: '3.3'
+  
+services:
+  esb:
+     volumes:
+      - ./esb:/home/app/code
+      - ./key:/home/app/key
+     image: node
+     ports:
+       - "8002:80"
+     restart: always
+     command: node /home/app/code/server.js
+     networks:
+      - web
+     depends_on:
+      - almacenamiento      
+      - archivos_traducidos
+      - traducciones
+      - jwt
+     environment:
+      NODE_ALMACENAMIENTO_PORT: localhost:8003 
+      NODE_ARCHIVOS_TRADUCIDOS_PORT: localhost:8004
+      NODE_JWT_PORT: localhost:8006
+      NODE_TRADUCCIONES_PORT: localhost:8005
+     command: sh /home/app/code/run.sh
+     #environment:
+       #DRUPAL_DB_HOST: db:3306
+       #DRUPAL_DB_USER: drupal
+       #DRUPAL_DB_PASSWORD: drupal
+       #DRUPAL_DB_NAME: drupal
+  almacenamiento:
+    volumes:
+      - ./almacenamiento:/home/app/code
+      - ./key:/home/app/key
+    image: node
+    networks:
+      - web
+    depends_on:
+      - db_almacenamiento
+    environment:
+      NODE_DB_HOST: db_almacenamiento:3306
+      NODE_DB_USER: almacenamiento
+      NODE_DB_PASSWORD: Chachas!123
+      NODE_DB_NAME: ALMACENAMIENTO
+    ports:
+      - "8003:80"
+    command: sh /home/app/code/rus.sh
+  
+  archivos_traducidos:
+    volumes:
+      - ./archivos_traducidos:/home/app/code
+      - ./key:/home/app/key
+    image: node
+    networks:
+      - web
+    depends_on:
+      - db_archivos_traducidos
+    environment:
+      NODE_DB_HOST: db_archivos_traducidos:3306
+      NODE_DB_USER: root
+      NODE_DB_PASSWORD: Chachas!123
+      NODE_DB_NAME: sa_db
+      NODE_JWT: http://192.168.0.107:8006
+      NODE_ESB: http://192.168.0.107:8002
+      NODE_ALM: http://192.168.0.107:8003
+    ports:
+      - "8004:80"
+    command: sh /home/app/code/rus.sh
+
+  traducciones:
+    volumes:
+      - ./traducciones:/home/app/code
+    image: node
+    networks:
+      - web
+    depends_on:
+      - db_traducciones
+    environment:
+      NODE_DB_HOST: db_traducciones:3306
+      NODE_DB_USER: traducciones
+      NODE_DB_PASSWORD: Chachas!123
+      NODE_DB_NAME: sa_db
+      NODE_ESB: http://192.168.0.16:8002
+      NODE_JWT: http://192.168.0.16:8006
+      NODE_ALMACENAMIENTO: http://192.168.0.16:8003
+    ports:
+      - "8005:80"
+    command: sh /home/app/code/rus.sh
+
+  jwt:
+    volumes:
+      - ./jwt:/home/app/code
+      - ./key:/home/app/key
+    image: node
+    networks:
+      - web
+    depends_on:
+      - db_jwt
+    environment:
+      NODE_DB_HOST: db_jwt:3306
+      NODE_DB_USER: root
+      NODE_DB_PASSWORD: Chachas!123
+      NODE_DB_NAME: sa_db
+      JWT_KEY: test_key
+    ports:
+      - "8006:80"
+    command: sh /home/app/code/rus.sh
+
+  db_traducciones:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'sa_db'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'traducciones'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'Chachas!123'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'Chachas!123'
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - ./traducciones/database:/docker-entrypoint-initdb.d
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3303:3306'
+    networks:
+      - web
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+
+  db_archivos_traducidos:
+    image: mysql:5.7
+    networks:
+      - web
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'Chachas!123'
+      MYSQL_DATABASE: sa_db
+      MYSQL_PASSWORD: 'Chachas!123'
+    volumes:
+      - type: bind
+        source: ./archivos_traducidos/database
+        target: /docker-entrypoint-initdb.d
+    ports:
+      - '3304:3306'
+    expose:
+      - '3306'
+
+  db_almacenamiento:
+    image: mysql:5.7
+    command: --lower_case_table_names=0
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'sa_db'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'almacenamiento'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'Chachas!123'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'Chachas!123'
+      MYSQL_ROOT_HOST: '%' 
+    volumes:
+      - ./almacenamiento_dump:/docker-entrypoint-initdb.d
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3305:3306'
+    networks:
+      - web
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted  
+  db_jwt:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'sa_db'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'root'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'Chachas!123'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'Chachas!123'
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3307:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+networks:
+  web:
+

@@ -1,0 +1,26 @@
+{
+  "name": "archivos_traducidos",
+  "version": "1.0.0",
+  "description": "archivos traducidos",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Grupo 2",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "ejs": "^2.7.1",
+    "express-myconnection": "^1.0.4",
+    "mysql": "^2.17.1"
+  },
+  "devDependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^1.19.4"
+  }
+}

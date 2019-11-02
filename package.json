@@ -1,0 +1,22 @@
+{
+  "name": "proyecto",
+  "version": "1.0.0",
+  "description": "Carpeta root para el proyecto de sa",
+  "main": "gulp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/Plata346/sa_g2_2s2019.git"
+  },
+  "keywords": [
+    "SA"
+  ],
+  "author": "Mike Gutierrez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/Plata346/sa_g2_2s2019/issues"
+  },
+  "homepage": "https://gitlab.com/Plata346/sa_g2_2s2019#readme"
+}

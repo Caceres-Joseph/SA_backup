@@ -1,0 +1,31 @@
+# Este archivo es geenrado por el Grupo No 2
+# Es un archivo para traducciones en WordPress.
+
+# Trasducido:
+
+msgid ""
+msgstr ""
+
+"Project-Id-Version: 1.0\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2019-11-02 \n"
+"Language-Team: es_ES \n"
+"User: Alan Plata \n"
+"Language-Team: es_ES \n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_ES \n"
+"Complemento: WordPress Sing In\n"
+
+
+# $tense = __( 'out', 'Salir' );
+#
+# wpml-name: 2236340334
+msgid '"out" 
+msgstr "Salir"
+
+# $tense = __( 'Ok', 'Hecho' );
+#
+# wpml-name: -810424154
+msgid '"Ok" 
+msgstr "Hecho"

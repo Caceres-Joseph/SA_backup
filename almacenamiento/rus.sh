@@ -9,6 +9,8 @@ echo "Installing nodemon for clear cache.."
 npm install nodemon --save-dev
 echo 'Installing jwt'
 npm install jsonwebtoken --save-dev
+echo 'Installing axios'
+npm install axios --save-dev
 #echo 'Cargando la base de datos'
 #mysql -u $NODE_DB_USER -p $NODE_DB_PASSWORD -h  < script/setup.sql
 exec /home/app/code/node_modules/.bin/nodemon server.js

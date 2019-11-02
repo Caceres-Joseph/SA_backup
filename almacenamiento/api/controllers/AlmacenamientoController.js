@@ -422,8 +422,7 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 				})
 					.then(result => {
 						console.log(" === TOken ======");
-						anonymous_token = result.data.token
-						console.log(result.data);
+						var anonymous_token = result.data.token
 						//console.log(anonymous_token)
 						var url2 = ip + 'post/complementoTraducido'
 

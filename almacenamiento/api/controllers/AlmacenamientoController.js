@@ -347,8 +347,8 @@ exports.agregar_traduccion_cadena = function (req, res) {
 exports.aprobar_traduccion_cadena = function (req, res) {
 
 
-	var ip = "http://archivos_traducidos:80/"
-	var ip_auth = "http://jwt:80/"
+	var ip = "http://archivos_traducidos:80/";
+	var ip_auth = "http://jwt:80/";
 
 	const scope = "traducidos.listaComplementos";
 	var token = req.body.token;

@@ -469,7 +469,9 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 								var url2 = ip + '/post/complementoTraducido'
 		
 								axios.post(url2, 
-									data
+									{
+										cadena:"hola"
+									}
 								).then(result2 => {
 									console.log("Consumiendo traducidos ==================");
 									console.log(result2.data)

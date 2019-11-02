@@ -429,13 +429,17 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 						data.nombre = results[0][0].nombre;
 						data.correo = results[0][0].correo;
 						var complemento={
-							nombre: results[0][0].nombre
+							nombre: results[0][0].nombre,
+							localizacionOriginal : results[0][0].localizacionoriginal,
+							localizacionTraducida : results[0][0].localizaciontraduccion
+							
 						};
+
+						/*
 						var loc_original = results[0][0].LocalizacionOriginal;
 						var loc_traduccion = results[0][0].LocalizacionTraduccion;
 
-						for (var i = results[0].length - 1; i >= 0; i--) {
-							//console.log(results[0][i].msgstr);
+						for (var i = results[0].length - 1; i >= 0; i--) { 
 							var contenido = {
 								msgid: results[0][i].msgid,
 								msgstr: results[0][i].msgstr,
@@ -450,7 +454,7 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 							contenido: cadenas
 						};
 						console.log(cadenas);
-
+*/
 
 					}
 				});

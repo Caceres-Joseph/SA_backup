@@ -593,8 +593,8 @@ BEGIN
 											and idEstado = _idestado
 											and lower(trim(cadena)) = lower(trim(_cadena))
 											and idLocalizacion = _idLocalizacion);
-			set _idestado = (select idestado from estado where Estado = 'Aprobado');
-            if (select count(*) from BitacoraCambio where idDetalleComplemento = _iddetallecomplemento and idestado = _idestado) < 2 then
+			set _idestado = (select idestado from estado where Estado = 'Aprobado' limit 1);
+            if (select count(*) from BitacoraCambio where idDetalleComplemento = _iddetallecomplemento and idestado = _idestado limit 1) < 2 then
 				insert into BitacoraCambio (idDetalleComplemento,IdEstado,FechaCambio,nombreusr,correousr)
 				values (_iddetallecomplemento,_idestado,now(),_nombreusr,_correousr);
                 select 200 estado, concat('Aprobacion de traduccion ',lower(trim(_cadena))) mensaje;

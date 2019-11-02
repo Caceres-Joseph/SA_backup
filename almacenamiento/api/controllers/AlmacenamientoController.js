@@ -434,16 +434,30 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 							localizacionTraducida: results[0][0].localizaciontraduccion
 
 						};
-						data.complemento = complemento; 
-						for (var i = 0; i < results[0].length; i++) { 
+						data.complemento = complemento;
+
+						/*
+						for (var i = 0; i < results[0].length; i++) {
 							var cadena = {
 								msgid: results[0][i].msgid,
-								msgstr: results[0][i].msgstr, 
+								msgstr: results[0][i].msgstr,
 							}
 							contenido[i] = cadena;
 						}
-						
-						data.complemento.contenido= contenido;
+						*/
+
+
+						for (var i = results[0].length - 1; i >= 0; i--) {
+							//console.log(results[0][i].msgstr);
+							var cadena = {
+								msgid: results[0][i].msgid,
+								msgstr: results[0][i].msgstr,
+								numeroAprobaciones: results[0][i].numeroAprobaciones
+							}
+							contenido[i] = cadena;
+						}
+
+						data.complemento.contenido = contenido;
 						console.log(data);
 					}
 				});

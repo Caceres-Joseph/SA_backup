@@ -459,6 +459,12 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 
 						data.complemento.contenido = contenido;
 						console.log(data);
+
+						res.send({
+							estado: 200,
+							mensaje: data
+						});
+
 					}
 				});
 				/*

@@ -60,9 +60,9 @@ services:
       NODE_DB_USER: root
       NODE_DB_PASSWORD: Chachas!123
       NODE_DB_NAME: sa_db
-      NODE_JWT: http://192.168.0.107:8006
-      NODE_ESB: http://192.168.0.107:8002
-      NODE_ALM: http://192.168.0.107:8003
+      NODE_JWT: http://35.225.252.91:8006
+      NODE_ESB: http://35.225.252.91:8002
+      NODE_ALM: http://35.225.252.91:8003
     ports:
       - "8004:80"
     command: sh /home/app/code/rus.sh
@@ -80,9 +80,9 @@ services:
       NODE_DB_USER: traducciones
       NODE_DB_PASSWORD: Chachas!123
       NODE_DB_NAME: sa_db
-      NODE_ESB: http://192.168.0.16:8002
-      NODE_JWT: http://192.168.0.16:8006
-      NODE_ALMACENAMIENTO: http://192.168.0.16:8003
+      NODE_ESB: http://35.225.252.91:8002
+      NODE_JWT: http://35.225.252.91:8006
+      NODE_ALMACENAMIENTO: http://35.225.252.91:8003
     ports:
       - "8005:80"
     command: sh /home/app/code/rus.sh

@@ -102,7 +102,7 @@ exports.getCatalogo = function(request, response){
 				
 				})
 		*/
-		axios.post('http://35.225.252.91:8006/post/autorizacion',{
+		axios.post(JWT,{
 			clientid:"ARCHIVOS_TRADUCIDOS"
 			}).then(function(result){
 				var token = result.data.token;
@@ -117,7 +117,7 @@ exports.getCatalogo = function(request, response){
 					var data_Almacenamiento = {
 						
 					};
-					var ruta = 'http://35.225.252.91:8003'+"/get/catalogo/"+idComplemento+"?token="+token;
+					var ruta = ALMACENAMIENTO+"/get/catalogo/"+idComplemento+"?token="+token;
 					console.log(ruta);
 					axios.post(ESB,{
 						token:token,
@@ -190,7 +190,7 @@ exports.nuevoComplemento = function(request,response){
 	var arreglo = texto.split('\n');
 	var nombreComplemento = request.body.nombreComplemento;
 	try{
-		axios.post('http://35.225.252.91:8006/post/autorizacion',{
+		axios.post(JWT,{
 			clientid:"ALMACENAMIENTO"
 			}).then(function(result){
 				var token = result.data.token;
@@ -227,7 +227,7 @@ exports.nuevoComplemento = function(request,response){
 					console.log(data_Almacenamiento);
 					axios.post(ESB,{
 						token:token,
-						url:'http://35.225.252.91:8003'+"/post/complemento",
+						url:ESB+"/post/complemento",
 						tipo:"POST",
 						funcionSolicitada:"almacenamiento.guardarComplemento",
 						parametros: data_Almacenamiento
@@ -271,7 +271,7 @@ exports.agregarTraduccion = function(request,response){
 	+"cadenaTraduccion: "+cadenaTraduccion+"\n"
 	+"token: "+token+"\n");*/
 	try{
-		axios.post('http://35.225.252.91:8006/post/autorizacion',{
+		axios.post(JWT,{
 			clientid:"ARCHIVOS_TRADUCIDOS"
 			}).then(function(result){
 				token = result.data.token;
@@ -306,7 +306,7 @@ exports.agregarTraduccion = function(request,response){
 					   console.log(data_Almacenamiento);
 						   return axios.post(ESB,{
 							   token:token,
-							   url: 'http://35.225.252.91:8003'+"/post/agregarTraduccionCadena",
+							   url: ALMACENAMIENTO+"/post/agregarTraduccionCadena",
 							   tipo:"POST",
 							   funcionSolicitada:"almacenamiento.agregarTraduccionCadena",
 							   parametros: data_Almacenamiento

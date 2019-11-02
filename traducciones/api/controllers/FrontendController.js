@@ -5,7 +5,7 @@ var JSAlert = require('js-alert');
 const ESB = process.env.NODE_ESB+"/post/comunicacion/";
 const JWT = process.env.NODE_JWT+"/post/autorizacion";
 const ALMACENAMIENTO = process.env.NODE_ALMACENAMIENTO;
-const BACKEND = 'http://192.168.0.16:8005'
+const BACKEND = 'http://35.225.252.91:8005'
 
 exports.loginInicial = function(req, res, next) {
 	res.render('login', { aviso: false });
@@ -196,51 +196,123 @@ exports.ObtenerComplementos = function(req, res, next) {
     var valores = [usuario, nombreComplemento, idComplemento, localizacionOriginal, localizacionTraduccion, msgid, msgstr, verificar];
     if(verificar=='Aprobar'){
         try{
-            axios.post(BACKEND+"/post/revisar/",{
-                idComplemento: idComplemento,
-	            nombreComplemento: nombreComplemento,
-	            nombreLocalizacionOriginal: localizacionOriginal,
-	            nombreLocalizacionTraducida: localizacionTraduccion,
-	            cadenaOriginal: request.body.msgid,
-	            cadenaTraducida: msgstr,
-	            idUsuario : usuario
-            }).then((res1)=>{
-                //alert(res1.data.mensaje);
-               res.send(res1.data)
-               //peticion = res1.data;
-              // var prueba = peticion.data.catalogo;
-             //  res.render('VerCadena', {'catalogos' : prueba, 'idComplemento' : req.params.id, 'nombreComplemento' : req.params.nombre}); 
-               // res.redirect('/IngresarComplemento')
-            }).catch((error) =>{
-                                console.log(error);
-                                return res.send(error.data);
-                            })
+            axios.post(JWT,{
+                clientid:"ARCHIVOS_TRADUCIDOS"
+                }).then(function(result){
+                    token = result.data.token;
+                    //console.log(result.data.token);
+                    //console.log(middle.decode(result.data.token));
+                    var miQuery = "SELECT Nombre, Correo from Usuario where Nombre = "+usuario+";";
+                    //console.log(miQuery);
+                    conexion.query(miQuery, function(err, result){
+                    if(err){
+                        return res.send(JSON.stringify(
+                        {
+                            estado:"500",
+                            mensaje:"Error de Servidor"
+                        }
+                        ))
+                    }else{
+                        nombre = result[0].Nombre;
+                        correo = result[0].Correo;
+                        try{
+                            var data_Almacenamiento = {
+                               token:token,
+                               nombreComplemento: nombreComplemento,
+                               idComplemento:idComplemento,
+                               nombreLocalizacionOriginal: localizacionOriginal,
+                               nombreLocalizacionTraducida: localizacionTraduccion,
+                               cadenaOriginal: msgid,
+                               cadenaTraducida: msgstr,
+                               nombre: nombre,
+                               correo: correo,
+                           };
+                           console.log("valiendomadre");
+                           console.log(data_Almacenamiento);
+                               return axios.post(ESB,{
+                                   token:token,
+                                   url: ALMACENAMIENTO+"/post/agregarTraduccionCadena",
+                                   tipo:"POST",
+                                   funcionSolicitada:"almacenamiento.agregarTraduccionCadena",
+                                   parametros: data_Almacenamiento
+                               })
+                               .then((res1)=>{
+                                   console.log(res1)
+                                   return res.send(res1.data);
+                               })
+                           }catch(error){
+                               console.log(error);
+                               return res.send(error.data);
+                           }
+                    }
+                    })
+            })
+    
+        //  SELECT Nombre, Correo from Usuario where idUsuario = 1;
+        
         }catch(error){
+                return error;
         }    
     }else{
         try{
-            axios.post(BACKEND+"/post/agregarTraduccion/",{
-                idComplemento: idComplemento,
-	            nombreComplemento: nombreComplemento,
-	            nombreLocalizacionOriginal: localizacionOriginal,
-	            nombreLocalizacionTraducida: localizacionTraduccion,
-	            cadenaOriginal: request.body.msgid,
-	            cadenaTraducida: msgstr,
-                idUsuario : usuario
-                
-            }).then((res1)=>{
-                //alert(res1.data.mensaje);
-               res.send(res1.data)
-               //peticion = res1.data;
-              // var prueba = peticion.data.catalogo;
-             //  res.render('VerCadena', {'catalogos' : prueba, 'idComplemento' : req.params.id, 'nombreComplemento' : req.params.nombre}); 
-               // res.redirect('/IngresarComplemento')
-            }).catch((error) =>{
+            axios.post(JWT,{
+                clientid:"ARCHIVOS_TRADUCIDOS"
+                }).then(function(result){
+                    token = result.data.token;
+                    //console.log(result.data.token);
+                    //console.log(middle.decode(result.data.token));
+                    var miQuery = "SELECT Nombre, Correo from Usuario where Nombre = "+nombre+";";
+                    //console.log(miQuery);
+                    conexion.query(miQuery, function(err, result){
+                    if(err){
+                        return res.send(JSON.stringify(
+                        {
+                            estado:"500",
+                            mensaje:"Error de Servidor"
+                        }
+                        ))
+                    }else{
+                        nombre = result[0].Nombre;
+                        correo = result[0].Correo;
+                        try{
+                            var data_Almacenamiento= {
+                                token: token,
+                                nombreComplemento: nombreComplemento,
+                                idComplemento: idComplemento,
+                                nombreLocalizacionOriginal: nombreLocalizacionOriginal,
+                                nombreLocalizacionTraducida: nombreLocalizacionTraducida,
+                                cadenaOriginal: cadenaOriginal,
+                                nombre: nombre,
+                                correo: correo
+                            };
+                            return axios.post(ESB,{
+                                token:token,
+                                url:ALMACENAMIENTO+"/post/aprobarTraduccionCadena",
+                                tipo:"POST",
+                                funcionSolicitada:"almacenamiento.aprobarTraduccionCadena",
+                                parametros: data_Almacenamiento
+                            })
+                            .then((res1)=>{
+                                console.log(res1);
+                                return res.send(res1.data);
+                            }).catch((error) =>{
                                 console.log(error);
                                 return res.send(error.data);
                             })
+                        }catch(error){
+                            return error;
+                        }
+                    }
+                    })
+            }).catch((error) =>{
+                console.log(error);
+            })
+    
+        //  SELECT Nombre, Correo from Usuario where idUsuario = 1;
+        
         }catch(error){
+                return error;
         }
     }
-    res.send(valores);
+    //res.send(valores);
 }

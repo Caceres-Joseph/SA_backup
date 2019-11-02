@@ -443,7 +443,7 @@ exports.aprobar_traduccion_cadena = function (req, res) {
 							contenido[i] = cadena;
 						}
 						
-						data.contenido= contenido;
+						data.complemento.contenido= contenido;
 						console.log(data);
 					}
 				});

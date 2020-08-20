@@ -16,7 +16,7 @@
     "nodemon": "^1.19.4"
   },
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "env-cmd": "^10.0.1",
     "validator": "^11.1.0"
   }
